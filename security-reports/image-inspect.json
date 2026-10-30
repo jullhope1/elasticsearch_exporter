@@ -1,0 +1,68 @@
+﻿[
+    {
+        "Id": "sha256:86280f276328a8b93dbbf67cc51c6b0c870505867e5f01828a1eb4a2d8748832",
+        "RepoTags": [
+            "elasticsearch_exporter:critical-fixed"
+        ],
+        "RepoDigests": [],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-19T20:34:04.141076951Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "65534:65534",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "7979/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": null,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "/",
+            "Entrypoint": [
+                "/bin/elasticsearch_exporter"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.licenses": "Apache-2.0",
+                "org.opencontainers.image.revision": "d8e014046d78275052540b952696d91b3edf246e",
+                "org.opencontainers.image.source": "https://github.com/prometheus-community/elasticsearch_exporter",
+                "org.opencontainers.image.title": "elasticsearch_exporter",
+                "org.opencontainers.image.version": "1.11.0-dev.d8e0140"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 18269153,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/mcjsnfg2vo8bsxy4kh3dy17b8/diff",
+                "MergedDir": "/var/lib/docker/overlay2/zo5dzrpkcbwdsenog2dy6p0jp/merged",
+                "UpperDir": "/var/lib/docker/overlay2/zo5dzrpkcbwdsenog2dy6p0jp/diff",
+                "WorkDir": "/var/lib/docker/overlay2/zo5dzrpkcbwdsenog2dy6p0jp/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:32c50779026c0783a11c983daae56c4783b37c2b249e67d7d00324e930ec511f",
+                "sha256:cf0345ae020c1a45e72aaffc69cce6b2ae139cbea3dcd272c01f4ffe7069f141"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-19T20:34:04.228999853Z"
+        }
+    }
+]

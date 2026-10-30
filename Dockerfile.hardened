@@ -1,0 +1,32 @@
+# Pinned toolchain; only the static binary and runtime data enter the final image.
+FROM golang:1.27.2-alpine@sha256:f92b6ef800e499660581efdabdf25d9d817a9d124eaf900924f0504e7e27e12d AS build
+WORKDIR /src
+ENV CGO_ENABLED=0 GOTOOLCHAIN=local GOFLAGS=-mod=readonly
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify
+COPY . .
+RUN go test -count=1 ./...
+ARG VERSION=1.11.0-dev
+ARG REVISION=unknown
+RUN mkdir -p /out/bin /out/etc /out/tmp \
+    && chmod 1777 /out/tmp \
+    && printf 'nobody:x:65534:65534:Nobody:/tmp:/sbin/nologin\n' > /out/etc/passwd \
+    && printf 'nobody:x:65534:\n' > /out/etc/group \
+    && cp LICENSE /out/LICENSE \
+    && go build -trimpath -buildvcs=false \
+       -ldflags="-s -w -X github.com/prometheus/common/version.Version=${VERSION} -X github.com/prometheus/common/version.Revision=${REVISION} -X github.com/prometheus/common/version.Branch=security-local -X github.com/prometheus/common/version.BuildUser=docker" \
+       -o /out/bin/elasticsearch_exporter .
+
+FROM scratch
+ARG VERSION=1.11.0-dev
+ARG REVISION=unknown
+LABEL org.opencontainers.image.title="elasticsearch_exporter" \
+      org.opencontainers.image.source="https://github.com/prometheus-community/elasticsearch_exporter" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.revision="${REVISION}" \
+      org.opencontainers.image.licenses="Apache-2.0"
+COPY --from=build /out/ /
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+USER 65534:65534
+EXPOSE 7979
+ENTRYPOINT ["/bin/elasticsearch_exporter"]
